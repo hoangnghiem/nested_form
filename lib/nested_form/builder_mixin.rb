@@ -57,7 +57,10 @@ module NestedForm
 
     def fields_for_nested_model(name, object, options, block)
       t = options[:wrapper_tag] || :div
-      css_class = options[:wrapper_class] || 'fields'
+      css_class = options[:wrapper_class] || "fields"
+      if object.respond_to?(:parent) && object.parent.present?
+        css_class = options[:child_class] || "child"
+      end
       @template.content_tag(t, super, :class => css_class)
     end
   end
